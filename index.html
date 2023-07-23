@@ -11,48 +11,38 @@
     <div class="container">
       <div class="content">
         <h1 class="title">Tic Tac Toe</h1>
-        <form class="form">
+        <form>
           <div class="form-field">
             <label for="x-player-name">
               <div class="marker">X</div>
               <p>player name:</p>
             </label>
-            <input
-              type="text"
-              id="x-player-name"
-              name="x-player-name"
-              required
-            />
+            <input type="text" id="x-player-name" name="xPlayerName" required />
           </div>
           <div class="form-field">
             <label for="o-player-name">
               <div class="marker">O</div>
               <p>player name:</p>
             </label>
-            <input
-              type="text"
-              id="o-player-name"
-              name="o-player-name"
-              required
-            />
+            <input type="text" id="o-player-name" name="oPlayerName" required />
           </div>
           <button type="submit">Start</button>
         </form>
-        <div class="move-info">Move of <span class="marker">Player</span></div>
-        <div class="game-result">
-          <p><span class="marker">Player</span> won!</p>
+        <div class="move-info hidden">Move of <span class="marker"></span></div>
+        <div class="game-result hidden">
+          <p></p>
           <button>Restart</button>
         </div>
         <div class="board">
-          <div class="cell marker">X</div>
-          <div class="cell marker">O</div>
-          <div class="cell marker">O</div>
-          <div class="cell marker">O</div>
-          <div class="cell marker">X</div>
-          <div class="cell marker">O</div>
-          <div class="cell marker">O</div>
-          <div class="cell marker">O</div>
-          <div class="cell marker">X</div>
+          <div class="cell marker"></div>
+          <div class="cell marker"></div>
+          <div class="cell marker"></div>
+          <div class="cell marker"></div>
+          <div class="cell marker"></div>
+          <div class="cell marker"></div>
+          <div class="cell marker"></div>
+          <div class="cell marker"></div>
+          <div class="cell marker"></div>
         </div>
       </div>
     </div>

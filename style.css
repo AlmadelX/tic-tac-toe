@@ -30,7 +30,7 @@ p {
   text-align: center;
 }
 
-.form {
+form {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -113,4 +113,8 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.hidden {
+  display: none;
 }
