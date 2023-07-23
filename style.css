@@ -1,4 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata&family=Roboto&display=swap');
+
+html {
+  font-family: 'Roboto', sans-serif;
+}
+
 body,
-h1 {
+h1,
+p {
   margin: 0;
+}
+
+.container {
+  height: 100vh;
+  background-color: #eee;
+}
+
+.content {
+  margin: 0 auto;
+  width: max-content;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.title {
+  font-size: 4rem;
+  color: #1d4ed8;
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.form-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.form-field label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.form-field input {
+  border-radius: 4px;
+  border: none;
+  padding: 4px;
+  flex: 1;
+  height: 1rem;
+}
+
+.form-field input:focus {
+  outline: 2px solid #bfdbfe;
+}
+
+button {
+  border-radius: 4px;
+  border: 2px solid #bfdbfe;
+  width: 50%;
+  padding: 4px;
+  font-size: 1rem;
+  font-weight: 700;
+  background-color: white;
+  color: #1d4ed8;
+  cursor: pointer;
+}
+
+.marker {
+  font-family: 'Inconsolata', monospace;
+  font-size: 2rem;
+  font-weight: 900;
+  color: #1e40af;
+}
+
+.move-info,
+.game-result {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.game-result {
+  flex-direction: column;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.board {
+  margin: 0 auto;
+  border-radius: 16px;
+  border: 4px solid #bfdbfe;
+  width: 300px;
+  height: 300px;
+  display: grid;
+  grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+  gap: 4px;
+  background-color: #bfdbfe;
+  overflow: hidden;
+}
+
+.cell {
+  font-size: 3rem;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
