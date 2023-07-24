@@ -1,3 +1,5 @@
+'use strict';
+
 // Modules
 
 const game = (() => {
@@ -9,8 +11,9 @@ const game = (() => {
   // Properties
   let players;
   let currentPlayer;
-  let playing = false;
+  let status = '';
   let board;
+  let winner = null;
 
   // Methods
 
@@ -21,19 +24,53 @@ const game = (() => {
       playerFactory(oPlayerName, 'O'),
     ];
     currentPlayer = 0;
-    playing = true;
+    status = 'playing';
     board = new Array(9);
   }
 
-  // If the move is possible, performs it and returns true, otherwise immediately returns false
+  // Performs the move, if it's possible
   function move(id) {
-    if (!playing || board[id]) {
-      return false;
+    if (board[id]) {
+      return;
     }
 
     board[id] = players[currentPlayer].marker;
-    currentPlayer = (currentPlayer + 1) % 2;
-    return true;
+    update();
+    if (status === 'playing') {
+      currentPlayer = (currentPlayer + 1) % 2;
+    }
+  }
+
+  // Checks the board, if there's a draw sets status to 'draw', if there's a winner sets status to 'winner' and updates the winner property
+  function update() {
+    const winningPositions = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+
+    for (const [a, b, c] of winningPositions) {
+      if (board[a] && board[a] === board[b] && board[b] === board[c]) {
+        // Handle win case
+        status = 'win';
+        if (board[a] === 'X') {
+          winner = 0;
+        } else {
+          winner = 1;
+        }
+        return;
+      }
+    }
+
+    if (!board.includes(undefined)) {
+      // No space left, handle the draw
+      status = 'draw';
+    }
   }
 
   // Getters
@@ -42,17 +79,33 @@ const game = (() => {
     return players[currentPlayer].name;
   }
 
+  function getStatus() {
+    return status;
+  }
+
   function getBoard() {
     return board;
   }
 
-  return { start, move, getCurrentPlayerName, getBoard };
+  function getWinnerName() {
+    return players[winner].name;
+  }
+
+  return {
+    start,
+    move,
+    getCurrentPlayerName,
+    getStatus,
+    getBoard,
+    getWinnerName,
+  };
 })();
 
 const displayController = (() => {
   // Dom elements
   const form = document.querySelector('form');
   const moveInfo = document.querySelector('.move-info');
+  const gameResult = document.querySelector('.game-result');
   const cells = document.querySelectorAll('.cell');
 
   // Methods
@@ -90,9 +143,29 @@ const displayController = (() => {
   }
 
   function handleClick(id) {
-    if (game.move(id)) {
+    if (game.getStatus() !== 'playing') {
+      return;
+    }
+
+    game.move(id);
+    updateBoard();
+
+    if (game.getStatus() === 'playing') {
       updateMoveInfo();
-      updateBoard();
+    } else {
+      showGameResult();
+    }
+  }
+
+  function showGameResult() {
+    toggleElement(moveInfo);
+    toggleElement(gameResult);
+
+    const element = gameResult.querySelector('p');
+    if (game.getStatus() === 'draw') {
+      element.textContent = 'Draw!';
+    } else {
+      element.innerHTML = `<span class="marker">${game.getWinnerName()}</span> wins!`;
     }
   }
 
