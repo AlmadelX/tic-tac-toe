@@ -10,9 +10,9 @@ const game = (() => {
 
   // Properties
   let players;
-  let currentPlayer;
+  let currentPlayer = 0;
   let status = '';
-  let board;
+  let board = new Array(9);
   let winner = null;
 
   // Methods
@@ -23,9 +23,7 @@ const game = (() => {
       playerFactory(xPlayerName, 'X'),
       playerFactory(oPlayerName, 'O'),
     ];
-    currentPlayer = 0;
     status = 'playing';
-    board = new Array(9);
   }
 
   // Performs the move, if it's possible
@@ -73,6 +71,13 @@ const game = (() => {
     }
   }
 
+  function restart() {
+    currentPlayer = 0;
+    status = '';
+    board = new Array(9);
+    winner = null;
+  }
+
   // Getters
 
   function getCurrentPlayerName() {
@@ -94,6 +99,7 @@ const game = (() => {
   return {
     start,
     move,
+    restart,
     getCurrentPlayerName,
     getStatus,
     getBoard,
@@ -106,6 +112,7 @@ const displayController = (() => {
   const form = document.querySelector('form');
   const moveInfo = document.querySelector('.move-info');
   const gameResult = document.querySelector('.game-result');
+  const restartButton = gameResult.querySelector('button');
   const cells = document.querySelectorAll('.cell');
 
   // Methods
@@ -169,6 +176,13 @@ const displayController = (() => {
     }
   }
 
+  function restart() {
+    game.restart();
+    toggleElement(gameResult);
+    toggleElement(form);
+    updateBoard();
+  }
+
   function setupPage() {
     form.addEventListener('submit', e => {
       e.preventDefault();
@@ -176,10 +190,12 @@ const displayController = (() => {
     });
 
     cells.forEach((cell, id) => {
-      cell.addEventListener('click', e => {
+      cell.addEventListener('click', () => {
         handleClick(id);
       });
     });
+
+    restartButton.addEventListener('click', restart);
   }
 
   return { setupPage };
